@@ -10,8 +10,7 @@ import SearchResultsModal from "./SearchResultsModal";
 export default function Entry() {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
-
-  const [formData, setFormData] = useState({
+  const initFormData = {
     epicNo: "",
     name: "",
     firstName: "",
@@ -28,7 +27,8 @@ export default function Entry() {
     building: "",
     area: "",
     remark: "",
-  });
+  };
+  const [formData, setFormData] = useState(initFormData);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -216,6 +216,7 @@ export default function Entry() {
         firstName: formData.firstName,
         middleName: formData.middleName,
         lastName: formData.lastName,
+        mobile: formData.mobile,
         wing: formData.wing,
         roomNo: formData.roomNo,
         building: formData.building,
@@ -224,12 +225,16 @@ export default function Entry() {
         userId: userId,
       };
 
-      const result = await updateVoterData(formData.epicNo, updateData);
+      const result = await updateVoterData(
+        formData.epicNo.trim().toUpperCase(),
+        updateData
+      );
 
       if (result.ok) {
         setError("");
         alert("Voter data updated successfully!");
         console.log("Updated Data:", result.data);
+        setFormData(initFormData);
       } else {
         setError(result.error || "Failed to update voter data");
       }

@@ -25,22 +25,22 @@ export async function PUT(req) {
     }
 
     const updateData = {
-      first_name: firstName || null,
-      middle_name: middleName || null,
-      last_name: lastName || null,
-      wing: wing || null,
-      room_no: roomNo || null,
-      building_name: building || null,
-      area: area || null,
-      remark: remark || null,
-      modified_by: userId || null,
-      modified_date: new Date().toISOString(),
+      F_Name: firstName || null,
+      M_Name: middleName || null,
+      L_Name: lastName || null,
+      Wing: wing || null,
+      Room_No: roomNo || null,
+      Building_Name: building || null,
+      Area: area || null,
+      Remark: remark || null,
+      Modified_By: userId || null,
+      Modified_Date: new Date().toISOString(),
     };
 
     const { data, error } = await supabase
       .from("voterdata")
       .update(updateData)
-      .eq("epic_no", epicNo)
+      .eq("Epic", epicNo)
       .select()
       .single();
 

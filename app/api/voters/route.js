@@ -16,7 +16,7 @@ export async function GET(req) {
     const { data, error } = await supabase
       .from("voterdata")
       .select("*")
-      .eq("Epic", epicNo)
+      .ilike("Epic", `${epicNo}%`)
       .single();
 
     if (error) {

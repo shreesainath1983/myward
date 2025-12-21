@@ -6,7 +6,9 @@ export async function searchVoterByEpicNo(epicNo) {
     throw new Error("Epic No is required");
   }
 
-  const res = await fetch(`/api/voters?epicNo=${encodeURIComponent(epicNo)}`);
+  const res = await fetch(
+    `/api/voters?epicNo=${encodeURIComponent(epicNo.trim().toUpperCase())}`
+  );
   const result = await res.json();
   return { ok: res.ok, ...result };
 }
@@ -20,9 +22,12 @@ export async function searchVoterByName(firstName, middleName, lastName) {
   }
 
   const params = new URLSearchParams();
-  if (firstName && firstName.trim()) params.append("firstName", firstName);
-  if (middleName && middleName.trim()) params.append("middleName", middleName);
-  if (lastName && lastName.trim()) params.append("lastName", lastName);
+  if (firstName && firstName.trim())
+    params.append("firstName", firstName.trim().toLowerCase());
+  if (middleName && middleName.trim())
+    params.append("middleName", middleName.trim().toLowerCase());
+  if (lastName && lastName.trim())
+    params.append("lastName", lastName.trim().toLowerCase());
 
   const res = await fetch(`/api/voters/search?${params.toString()}`);
   const result = await res.json();
