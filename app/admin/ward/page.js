@@ -1,15 +1,21 @@
 "use client";
-
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { Map, Marker, Popup } from "@maptiler/sdk";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { isAdmin, getStoredUser, logout } from "../authUtils";
+import { isAdmin, getStoredUser, logout } from "../../authUtils";
 
 export default function Ward() {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState(null);
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [popupData, setPopupData] = useState(null);
+  const popupRef = useRef(null);
+  const [boundaryCoords, setBoundaryCoords] = useState(null);
+  const [selectedLayout, setSelectedLayout] = useState(0);
+  const [buildings, setBuildings] = useState([]);
 
   // Authorization check
   useEffect(() => {
@@ -36,14 +42,6 @@ export default function Ward() {
       </div>
     );
   }
-
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [popupData, setPopupData] = useState(null);
-  const popupRef = useRef(null);
-  const [boundaryCoords, setBoundaryCoords] = useState(null);
-  const [selectedLayout, setSelectedLayout] = useState(0);
-  const [buildings, setBuildings] = useState([]);
 
   // Fetch layouts first, then buildings
   useEffect(() => {
@@ -86,8 +84,6 @@ export default function Ward() {
         }
       });
   }, []);
-
-  console.log(buildings);
 
   useEffect(() => {
     if (map.current) return;

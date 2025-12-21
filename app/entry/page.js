@@ -35,6 +35,7 @@ export default function Entry() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [user, setUser] = useState(null);
+  const [showAdminFields, setShowAdminFields] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -297,32 +298,53 @@ export default function Entry() {
       >
         <div className="sticky top-0 z-50 bg-white rounded-t-xl border-b border-gray-200 p-2 shadow-md">
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-between gap-3">
               <h2 className="text-xl font-bold text-gray-800">Search Voter</h2>
-              <button
-                type="button"
-                onClick={handleSearch}
-                disabled={loading}
-                className="cursor-pointer p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 flex"
-                title="Search voter by Epic No or Name"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleSearch}
+                  disabled={loading}
+                  className="cursor-pointer p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 flex"
+                  title="Search voter by Epic No or Name"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                Search
-              </button>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  Search
+                </button>
+                <div
+                  className="p-2 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition"
+                  onClick={() => setShowAdminFields(!showAdminFields)}
+                  title="Toggle Admin Search Fields"
+                >
+                  <svg
+                    className="w-6 h-6 text-gray-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
-            {isAdmin(user) && (
+            {isAdmin(user) && showAdminFields && (
               <div className="flex flex-col sm:flex-row gap-2 text-xs text-gray-600 bg-blue-50 p-2 rounded">
                 <span className="font-semibold">Admin Search:</span>
                 <div className="flex flex-col sm:flex-row gap-2 flex-1">

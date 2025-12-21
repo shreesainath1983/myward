@@ -1,0 +1,34 @@
+// userService.js
+// Service for managing users (add, fetch, update, delete)
+
+export async function fetchAllUsers() {
+  const res = await fetch(`/api/users`);
+  const result = await res.json();
+  return { ok: res.ok, ...result };
+}
+
+export async function addUser(userData) {
+  const { name, email, password, role_id } = userData;
+
+  if (!name || !email) {
+    throw new Error("Name and email are required");
+  }
+
+  const payload = {
+    name,
+    email,
+    password: password || null,
+    role_id: role_id || 2, // Default to user role
+  };
+
+  const res = await fetch(`/api/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await res.json();
+  return { ok: res.ok, ...result };
+}

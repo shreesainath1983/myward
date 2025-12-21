@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { loginUser } from "./loginService";
+import { isUserLoggedIn } from "../authUtils";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    if (isUserLoggedIn()) {
+      router.push("/entry");
+    }
+  }, [router]);
 
   const login = async (e) => {
     e.preventDefault();
