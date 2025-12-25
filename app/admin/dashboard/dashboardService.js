@@ -1,33 +1,29 @@
 // userService.js
 // Service for managing users (add, fetch, update, delete)
 
-export async function fetchAllUsers() {
-  const res = await fetch(`/api/users`);
+export async function fetchAllVoters() {
+  const res = await fetch(`/api/voters`);
   const result = await res.json();
   return { ok: res.ok, ...result };
 }
 
-export async function addUser(userData) {
-  const { name, email, password, role_id } = userData;
-
-  if (!name || !email) {
-    throw new Error("Name and email are required");
+/**
+ * Fetch user-wise voterdata modification report
+ * @param {Object} params
+ * @param {string} params.fromDate - YYYY-MM-DD
+ * @param {string} params.toDate - YYYY-MM-DD
+ */
+export async function fetchUserVoterdataReport({ fromDate, toDate }) {
+  if (!fromDate || !toDate) {
+    throw new Error("From date and To date are required");
   }
 
-  const payload = {
-    name,
-    email,
-    password: password || null,
-    role_id: role_id || 2, // Default to user role
-  };
+  const query = new URLSearchParams({
+    fromDate,
+    toDate,
+  }).toString();
 
-  const res = await fetch(`/api/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(`/api/dashboard?${query}`);
 
   const result = await res.json();
   return { ok: res.ok, ...result };

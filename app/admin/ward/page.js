@@ -28,11 +28,6 @@ export default function Ward() {
     setIsAuthorized(true);
   }, [router]);
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
-  };
-
   if (!isAuthorized) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -44,57 +39,57 @@ export default function Ward() {
   }
 
   // Fetch layouts first, then buildings
-  useEffect(() => {
-    fetch("/api/layouts")
-      .then((r) => r.json())
-      .then((j) => {
-        if (j.data && j.data.length > 0) {
-          setBoundaryCoords(j.data || null);
-          // After layouts are loaded, fetch buildings
-          fetch("/api/buildings")
-            .then((r2) => r2.json())
-            .then((b) => {
-              if (b.data) {
-                setBuildings(
-                  b.data
-                  // .map((building) => {
-                  //   let positionData = building.extra_data;
-                  //   // Check if positionData is a JSON string
-                  //   if (typeof positionData === "string") {
-                  //     try {
-                  //       const parsed = JSON.parse(positionData);
-                  //       // If parsed object has a 'position' property, use it
-                  //       if (parsed && parsed.position) {
-                  //         positionData = parsed.position;
-                  //       } else {
-                  //         positionData = parsed;
-                  //       }
-                  //     } catch (e) {
-                  //       // Not JSON, leave as is
-                  //     }
-                  //   }
-                  //   return {
-                  //     name: building.name,
-                  //     position: positionData,
-                  //   };
-                  // })
-                );
-              }
-            });
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/layouts")
+  //     .then((r) => r.json())
+  //     .then((j) => {
+  //       if (j.data && j.data.length > 0) {
+  //         setBoundaryCoords(j.data || null);
+  //         // After layouts are loaded, fetch buildings
+  //         fetch("/api/buildings")
+  //           .then((r2) => r2.json())
+  //           .then((b) => {
+  //             if (b.data) {
+  //               setBuildings(
+  //                 b.data
+  //                 // .map((building) => {
+  //                 //   let positionData = building.extra_data;
+  //                 //   // Check if positionData is a JSON string
+  //                 //   if (typeof positionData === "string") {
+  //                 //     try {
+  //                 //       const parsed = JSON.parse(positionData);
+  //                 //       // If parsed object has a 'position' property, use it
+  //                 //       if (parsed && parsed.position) {
+  //                 //         positionData = parsed.position;
+  //                 //       } else {
+  //                 //         positionData = parsed;
+  //                 //       }
+  //                 //     } catch (e) {
+  //                 //       // Not JSON, leave as is
+  //                 //     }
+  //                 //   }
+  //                 //   return {
+  //                 //     name: building.name,
+  //                 //     position: positionData,
+  //                 //   };
+  //                 // })
+  //               );
+  //             }
+  //           });
+  //       }
+  //     });
+  // }, []);
 
   useEffect(() => {
-    if (map.current) return;
-    if (!boundaryCoords) return;
+    if (map.current || !isAuthorized) return;
+    if (!boundary) return;
     map.current = new Map({
       container: mapContainer.current,
       style: `https://api.maptiler.com/maps/streets/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}`,
       center: [72.8215, 19.418],
       zoom: 15,
     });
-    const layout = boundaryCoords[selectedLayout].boundary_coords;
+    const layout = boundary;
     map.current.on("load", () => {
       map.current.addSource("boundary", {
         type: "geojson",
@@ -127,62 +122,62 @@ export default function Ward() {
         },
       });
 
-      buildings.forEach((loc) => {
-        const marker = new Marker()
-          .setLngLat([loc.position[1], loc.position[0]])
-          .addTo(map.current);
+      // buildings.forEach((loc) => {
+      //   const marker = new Marker()
+      //     .setLngLat([loc.position[1], loc.position[0]])
+      //     .addTo(map.current);
 
-        const el = marker.getElement();
-        el.style.cursor = "pointer"; // make it clear it's clickable
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation(); // prevent map from handling the click
+      //   const el = marker.getElement();
+      //   el.style.cursor = "pointer"; // make it clear it's clickable
+      //   el.addEventListener("click", (e) => {
+      //     e.preventDefault();
+      //     e.stopPropagation(); // prevent map from handling the click
 
-          // compute pixel position of the marker within the map container
-          const point = map.current.project([loc.position[1], loc.position[0]]);
+      //     // compute pixel position of the marker within the map container
+      //     const point = map.current.project([loc.position[1], loc.position[0]]);
 
-          // store lat/lng and pixel position so we can position the popup beside the marker
-          setPopupData({
-            name: loc.name,
-            lng: loc.position[1],
-            lat: loc.position[0],
-            point: { x: point.x, y: point.y },
-          });
-        });
-      });
+      //     // store lat/lng and pixel position so we can position the popup beside the marker
+      //     setPopupData({
+      //       name: loc.name,
+      //       lng: loc.position[1],
+      //       lat: loc.position[0],
+      //       point: { x: point.x, y: point.y },
+      //     });
+      //   });
+      // });
     });
-  }, [boundaryCoords, selectedLayout]);
+  }, [isAuthorized]);
 
-  useEffect(() => {
-    if (!map.current) return;
-    const updatePopupPosition = () => {
-      if (!popupData) return;
-      const p = map.current.project([popupData.lng, popupData.lat]);
-      setPopupData((prev) =>
-        prev ? { ...prev, point: { x: p.x, y: p.y } } : prev
-      );
-    };
-    map.current.on("move", updatePopupPosition);
-    map.current.on("zoom", updatePopupPosition);
-    return () => {
-      if (!map.current) return;
-      map.current.off("move", updatePopupPosition);
-      map.current.off("zoom", updatePopupPosition);
-    };
-  }, [popupData]);
+  // useEffect(() => {
+  //   if (!map.current) return;
+  //   const updatePopupPosition = () => {
+  //     if (!popupData) return;
+  //     const p = map.current.project([popupData.lng, popupData.lat]);
+  //     setPopupData((prev) =>
+  //       prev ? { ...prev, point: { x: p.x, y: p.y } } : prev
+  //     );
+  //   };
+  //   map.current.on("move", updatePopupPosition);
+  //   map.current.on("zoom", updatePopupPosition);
+  //   return () => {
+  //     if (!map.current) return;
+  //     map.current.off("move", updatePopupPosition);
+  //     map.current.off("zoom", updatePopupPosition);
+  //   };
+  // }, [popupData]);
 
-  // close popup when clicking outside it (document click in bubble phase;
-  // marker click uses stopPropagation so it won't be blocked)
-  useEffect(() => {
-    if (!popupData) return;
-    const onDocClick = (e) => {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
-        setPopupData(null);
-      }
-    };
-    document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
-  }, [popupData]);
+  // // close popup when clicking outside it (document click in bubble phase;
+  // // marker click uses stopPropagation so it won't be blocked)
+  // useEffect(() => {
+  //   if (!popupData) return;
+  //   const onDocClick = (e) => {
+  //     if (popupRef.current && !popupRef.current.contains(e.target)) {
+  //       setPopupData(null);
+  //     }
+  //   };
+  //   document.addEventListener("click", onDocClick);
+  //   return () => document.removeEventListener("click", onDocClick);
+  // }, [popupData]);
 
   return (
     <div
