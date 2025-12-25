@@ -138,4 +138,10 @@ function spreadFullName(fullName) {
   };
 }
 
-export { boundary, societies, spreadFullName };
+const generateUserId = (users) => {
+  if (users.length === 0) return 1;
+  const ids = users.map((user) => user.id);
+  return Math.max(...ids) + 1;
+};
+
+export { boundary, societies, spreadFullName, generateUserId };

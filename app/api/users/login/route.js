@@ -16,7 +16,7 @@ export async function POST(req) {
 
     const { data, error } = await supabase
       .from("users")
-      .select("id, name, email, role_id")
+      .select("id, name, email, role_id, is_lock")
       .eq("email", email)
       .eq("password", password)
       .single();
@@ -25,6 +25,12 @@ export async function POST(req) {
       return NextResponse.json(
         { error: errorMessage.INVALID_CREDENTIALS },
         { status: 401 }
+      );
+    }
+    if (data.is_lock) {
+      return NextResponse.json(
+        { error: errorMessage.ACCOUNT_LOCKED },
+        { status: 403 }
       );
     }
     if (error) {

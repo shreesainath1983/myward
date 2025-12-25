@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchAllUsers, addUser } from "./userService";
 import { isUserLoggedIn, getStoredUser, isAdmin } from "../../authUtils";
+import { generateUserId } from "../../common";
 
 export default function UsersManagement() {
   const router = useRouter();
@@ -36,7 +37,10 @@ export default function UsersManagement() {
 
     setLoading(true);
     try {
-      const result = await addUser(formData);
+      const result = await addUser({
+        ...formData,
+        role_id: parseInt(formData.role_id),
+      });
       if (result.ok && result.data) {
         setSuccess("User added successfully!");
         setFormData({ name: "", email: "", password: "", role_id: "2" });
@@ -79,10 +83,12 @@ export default function UsersManagement() {
       router.push("/entry");
       return;
     }
-
     setIsAuthorized(true);
-    loadUsers();
   }, [router]);
+
+  useEffect(() => {
+    if (isAuthorized) loadUsers();
+  }, [isAuthorized]);
 
   if (!isAuthorized) {
     return (
@@ -204,7 +210,7 @@ export default function UsersManagement() {
                 Existing Users ({users.length})
               </h2>
               {users.length > 0 ? (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto max-h-[500px]">
                   <table className="w-full border-collapse">
                     <thead>
                       <tr className="bg-gray-100 border-b-2 border-gray-300">

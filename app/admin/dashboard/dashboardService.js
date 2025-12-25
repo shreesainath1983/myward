@@ -8,7 +8,7 @@ export async function fetchAllUsers() {
 }
 
 export async function addUser(userData) {
-  const { id, name, email, password, role_id } = userData;
+  const { name, email, password, role_id } = userData;
 
   if (!name || !email) {
     throw new Error("Name and email are required");
