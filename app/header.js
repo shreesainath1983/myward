@@ -27,11 +27,11 @@ const Header = () => {
   }, [pathname]);
 
   return (
-    <header className="bg-orange-400 text-white p-4">
+    <header className="bg-orange-400 text-white p-3">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Image src="/images/bjp.png" alt="BJP" width={50} height={50} />
-          <h2 className="text-l font-bold">Yogesh Singh BJP</h2>
+          <h2 className="text-xl font-bold">Yogesh Singh BJP</h2>
         </div>
         {!isHideMenu && (
           <div>
