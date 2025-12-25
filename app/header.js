@@ -102,7 +102,7 @@ const Header = () => {
                 className="hover:text-gray-200 transition"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Entry
+                Voter Search
               </Link>
               <Link
                 href="/admin/dashboard"
