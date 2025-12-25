@@ -30,5 +30,5 @@ export async function addUser(userData) {
   });
 
   const result = await res.json();
-  return { ok: res.ok, ...result };
+  return { ok: res.ok, data: { id: result.id } };
 }

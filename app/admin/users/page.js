@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchAllUsers, addUser } from "./userService";
 import { isUserLoggedIn, getStoredUser, isAdmin } from "../../authUtils";
-import { generateUserId } from "../../common";
 
 export default function UsersManagement() {
   const router = useRouter();
@@ -32,6 +31,11 @@ export default function UsersManagement() {
 
     if (!formData.name || !formData.email) {
       setError("Name and email are required");
+      return;
+    }
+
+    if (users.find((u) => u.email === formData.email)) {
+      setError("A user with this email already exists");
       return;
     }
 

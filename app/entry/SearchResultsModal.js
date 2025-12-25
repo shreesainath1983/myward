@@ -1,3 +1,5 @@
+import { spreadFullName } from "../common";
+
 // SearchResultsModal.js
 export default function SearchResultsModal({
   isOpen,
@@ -7,10 +9,6 @@ export default function SearchResultsModal({
   isLoading,
 }) {
   if (!isOpen) return null;
-  const { first_name, middle_name, last_name } = spreadFullName(
-    voter.full_name ||
-      `${voter.first_name} ${voter.middle_name} ${voter.last_name}`
-  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
@@ -53,35 +51,38 @@ export default function SearchResultsModal({
                   </tr>
                 </thead>
                 <tbody>
-                  {results.map((voter, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-gray-200 hover:bg-blue-50 transition"
-                    >
-                      <td className="px-4 py-3">
-                        <button
-                          onClick={() => onSelect(voter)}
-                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition"
-                        >
-                          Select
-                        </button>
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">
-                        {voter.Epic || "-"}
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">
-                        {voter.full_name ||
-                          `${voter.first_name} ${voter.middle_name} ${voter.last_name}` ||
-                          "-"}
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">
-                        {voter.Mobile1 || "-"}
-                      </td>
-                      <td className="px-4 py-3 text-gray-700">
-                        {voter.House_No || "-"}
-                      </td>
-                    </tr>
-                  ))}
+                  {results.map((voter, index) => {
+                    const fullName = `${voter.F_Name || ""} ${
+                      voter.M_name || ""
+                    } ${voter.L_Name || ""}`.trim();
+                    return (
+                      <tr
+                        key={index}
+                        className="border-b border-gray-200 hover:bg-blue-50 transition"
+                      >
+                        <td className="px-4 py-3">
+                          <button
+                            onClick={() => onSelect(voter)}
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition"
+                          >
+                            Select
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {voter.Epic || "-"}
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {fullName || voter.Name || "-"}
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {voter.Mobile1 || "-"}
+                        </td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {voter.House_No || "-"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

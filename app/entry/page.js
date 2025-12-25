@@ -170,10 +170,8 @@ export default function Entry() {
   };
 
   const handleSelectVoter = (voter) => {
-    const { first_name, middle_name, last_name } = spreadFullName(
-      voter.full_name ||
-        `${voter.first_name} ${voter.middle_name} ${voter.last_name}`
-    );
+    const { first_name, middle_name, last_name } = spreadFullName(voter.Name);
+
     setFormData((prev) => ({
       ...prev,
       epicNo: voter.Epic || "",
