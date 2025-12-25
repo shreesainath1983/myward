@@ -105,6 +105,12 @@ const Header = () => {
                 Entry
               </Link>
               <Link
+                href="/admin/dashboard"
+                className="hover:text-gray-200 transition"
+              >
+                Dashboard
+              </Link>
+              <Link
                 href="/admin/users"
                 className="hover:text-gray-200 transition"
                 onClick={() => setIsMenuOpen(false)}
