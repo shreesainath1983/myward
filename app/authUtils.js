@@ -53,6 +53,13 @@ export function isUserLoggedIn() {
   return !isTokenExpired(user);
 }
 
+export function getUserName() {
+  const user = getStoredUser();
+  if (!user || isTokenExpired(user)) return null;
+
+  return user.name;
+}
+
 export function isAdmin() {
   const user = getStoredUser();
   if (!user || isTokenExpired(user)) return false;

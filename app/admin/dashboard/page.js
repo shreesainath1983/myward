@@ -95,7 +95,7 @@ export default function Dashboard() {
           <button
             onClick={generateReport}
             disabled={loading}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer"
+            className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer"
           >
             {loading ? "Checking..." : "Check entries"}
           </button>

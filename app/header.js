@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { isAdmin } from "./authUtils";
+import { getUserName, isAdmin, isUserLoggedIn } from "./authUtils";
 import "./globals.css";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Header = () => {
   const [isAdminUser, setIsAdminUser] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const adminStatus = isAdmin();
+  const [userName, setUserName] = useState("");
   const [isHideMenu, setIsHideMenu] = useState(true);
   const pathname = usePathname();
   useEffect(() => {
@@ -18,12 +20,19 @@ const Header = () => {
 
   useEffect(() => {
     setIsHideMenu(pathname === "/login");
+    if (pathname !== "/login") {
+      const loggedIn = isUserLoggedIn();
+      if (loggedIn) setUserName(getUserName() || "User");
+    }
   }, [pathname]);
 
   return (
-    <header className="bg-blue-600 text-white p-4">
+    <header className="bg-orange-400 text-white p-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Yogesh Singh BJP</h2>
+        <div className="flex items-center gap-2">
+          <Image src="/images/bjp.png" alt="BJP" width={50} height={50} />
+          <h2 className="text-l font-bold">Yogesh Singh BJP</h2>
+        </div>
         {!isHideMenu && (
           <div>
             {/* Hamburger Icon */}
@@ -92,9 +101,14 @@ const Header = () => {
           </div>
         )}
       </div>
+      {!isHideMenu && (
+        <div className="flex justify-start mt-1 pt-1 text-sm border-t border-green-700">
+          Welcome, {userName}
+        </div>
+      )}
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <nav className="bg-blue-700 mt-3 flex flex-col gap-4 p-4 md:hidden">
+        <nav className="bg-green-600 mt-3 flex flex-col gap-4 p-4 md:hidden">
           {isAdminUser && (
             <>
               <Link

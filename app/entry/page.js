@@ -282,7 +282,7 @@ export default function Entry() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 backdrop-blur-sm">
           <div className="bg-white rounded-xl p-8 shadow-2xl">
             <div className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
               <p className="text-lg font-semibold text-gray-800">
                 Searching...
               </p>
@@ -297,13 +297,15 @@ export default function Entry() {
         <div className="sticky top-0 z-50 bg-white rounded-t-xl border-b border-gray-200 p-2 shadow-md">
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="text-xl font-bold text-gray-800">Search Voter</h2>
+              <h2 className="text-xl font-bold text-gray-800 pl-2">
+                Search Voter
+              </h2>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleSearch}
                   disabled={loading}
-                  className="cursor-pointer p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 flex"
+                  className="cursor-pointer p-2 bg-gray-600 hover:bg-green-700 text-white rounded-lg transition disabled:opacity-50 flex"
                   title="Search voter by Epic No or Name"
                 >
                   <svg
@@ -345,7 +347,7 @@ export default function Entry() {
               </div>
             </div>
             {isAdmin(user) && showAdminFields && (
-              <div className="flex flex-col sm:flex-row gap-2 text-xs text-gray-600 bg-blue-50 p-2 rounded">
+              <div className="flex flex-col sm:flex-row gap-2 text-xs text-gray-600 bg-green-50 p-2 rounded">
                 <span className="font-semibold">Admin Search:</span>
                 <div className="flex flex-col sm:flex-row gap-2 flex-1">
                   <input
@@ -354,7 +356,7 @@ export default function Entry() {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                   />
                   <input
                     type="text"
@@ -362,7 +364,7 @@ export default function Entry() {
                     name="middleName"
                     value={formData.middleName}
                     onChange={handleChange}
-                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                   />
                   <input
                     type="text"
@@ -370,7 +372,7 @@ export default function Entry() {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                   />
                 </div>
               </div>
@@ -390,7 +392,7 @@ export default function Entry() {
                 Epic No
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Epic No"
                 name="epicNo"
                 value={formData.epicNo}
@@ -401,7 +403,7 @@ export default function Entry() {
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Name
               </label>
-              <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-blue-50 text-gray-700">
+              <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-green-50 text-gray-700">
                 {formData.name || "N/A"}
               </div>
             </div>
@@ -410,7 +412,7 @@ export default function Entry() {
                 First Name
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter First Name"
                 name="firstName"
                 value={formData.firstName}
@@ -422,7 +424,7 @@ export default function Entry() {
                 Middle Name
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Middle Name"
                 name="middleName"
                 value={formData.middleName}
@@ -434,7 +436,7 @@ export default function Entry() {
                 Last Name
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Last Name"
                 name="lastName"
                 value={formData.lastName}
@@ -446,7 +448,7 @@ export default function Entry() {
                 Gender
               </label>
               <select
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700"
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
@@ -462,7 +464,7 @@ export default function Entry() {
                 Mobile
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Mobile"
                 name="mobile"
                 value={formData.mobile}
@@ -474,7 +476,7 @@ export default function Entry() {
                 Mobile 0
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
                 placeholder="Enter Mobile 0"
                 name="mobile0"
                 disabled={true}
@@ -487,7 +489,7 @@ export default function Entry() {
                 Mobile 1
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
                 placeholder="Enter Mobile 1"
                 name="mobile1"
                 disabled={true}
@@ -500,7 +502,7 @@ export default function Entry() {
                 Mobile 2
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
                 placeholder="Enter Mobile 2"
                 name="mobile2"
                 disabled={true}
@@ -513,7 +515,7 @@ export default function Entry() {
                 Address
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500 bg-gray-100"
                 placeholder="Enter Address"
                 name="address"
                 disabled={true}
@@ -526,7 +528,7 @@ export default function Entry() {
                 Wing
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Wing"
                 name="wing"
                 value={formData.wing}
@@ -538,7 +540,7 @@ export default function Entry() {
                 Room No
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Room No"
                 name="roomNo"
                 value={formData.roomNo}
@@ -550,7 +552,7 @@ export default function Entry() {
                 Building
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Building"
                 name="building"
                 value={formData.building}
@@ -562,7 +564,7 @@ export default function Entry() {
                 Area
               </label>
               <input
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
                 placeholder="Enter Area"
                 name="area"
                 value={formData.area}
@@ -575,7 +577,7 @@ export default function Entry() {
               Remark
             </label>
             <textarea
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-700 placeholder-gray-500"
               placeholder="Enter Remark"
               name="remark"
               rows="3"
@@ -584,7 +586,7 @@ export default function Entry() {
             />
           </div>
           <button
-            className="w-full mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+            className="w-full mt-6 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold py-3 rounded-lg hover:from-green-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition"
             type="submit"
           >
             Update
